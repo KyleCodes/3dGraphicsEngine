@@ -17,11 +17,16 @@ struct mesh
 	vector<triangle> tris;
 };
 
+struct mat4x4
+{
+	float m[4][4] = { 0 };
+};
+
 class engine3D : public olcConsoleGameEngine
 {
 private: 
 	mesh meshCube;
-
+	mat4x4 matProj;
 public:
 	engine3D()
 	{
@@ -61,11 +66,23 @@ public:
 
 		};
 		
+		// Populate projection matrix
+		float fNear = 0.1f;
+		float fFar = 1000.0f;
+		float fFov = 90.0f;
+		float aspectRatio = (float)ScreenHeight() / (float)ScreenWidth();
+		float fFovRad = 1.0f / tanf(fFov * 0.5f / 180.0f * 3.14159f);
+
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
+		Fill(0, 0, ScreenWidth(), ScreenHeight(), PIXEL_SOLID, FG_BLACK);
+
+		// Draw triangles
+		for(auto tri: meshCube.tris)
+
 		return true;
 	}
 };
